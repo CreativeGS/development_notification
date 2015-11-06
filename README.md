@@ -15,7 +15,7 @@ $ rake db:migrate
 ## Configuration
 
 ```ruby
-# in /config/initializers/development_notification
+# in /config/initializers/development_notification.rb
 DevelopmentNotification.configure do |config|
   config.leadersend_username = "email@example.com"
   config.leadersend_api_key = "0933e545acxc063cb8a101a374cc721f"
