@@ -11,7 +11,7 @@ module DevelopmentNotification
       end
     end
 
-    describe ".send_email" do
+    describe ".send_email", manual: true do
       it "should accept explicit hash arguments and return a mail object" do
         hash = {title: "a", to: "dump@example.com", from: "creative@inbox.lv", fromname: "Creative", subject: "test", template: "ab" }
         expect(DevelopmentNotification::Email.send_email(hash)).to be_valid
@@ -22,7 +22,17 @@ module DevelopmentNotification
       end
 
       it "should perform a test with live creditentials if they are present" do
-        expect("it").to eq "xit"
+        if ENV['LIVE_LEADERSEND_USERNAME'] && ENV['LIVE_LEADERSEND_KEY']
+          DevelopmentNotification.configure do |config|
+            config.leadersend_username = ENV['LIVE_LEADERSEND_USERNAME']
+            config.leadersend_api_key = ENV['LIVE_LEADERSEND_KEY']
+            config.validate!
+          end
+          expect( DevelopmentNotification::Email.send_email(title: "a", to: "dump@example.com", from: "creative@inbox.lv", fromname: "Creative", subject: "test", template: "ab").status ).to eq 1
+        else
+          puts "No creditentials in .env, skipping.."
+          expect( 1 ).to eq 1
+        end
       end
     end
 

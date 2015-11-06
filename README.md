@@ -28,7 +28,10 @@ end
 ## Usage
 After setup you gain access to:
 * DevelopmentNotification::Email model that logs email prepared and sent.
-* DevelopmentNotification::Email.send(parameter_hash) #=> sends emails
+* DevelopmentNotification::Email.send_email(parameter_hash) #=> sends emails
+
+### Email sending
+DevelopmentNotification::Email.send_email(title: "Systemside identifier", to: "dump@example.com", from: "creative@inbox.lv", fromname: "Creative", subject: "test", template: "html body")
 
 ## Development
 You need to configure the dummy app database in `spec/dummy/config/database.yml`
