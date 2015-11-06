@@ -1,6 +1,14 @@
-# This file is copied to spec/ when you run 'rails generate rspec:install'
+require 'pry'
+require 'factory_girl'
+require 'dotenv'
+Dotenv.load
+
 ENV['RAILS_ENV'] ||= 'test'
-require File.expand_path('../../config/environment', __FILE__)
+require File.expand_path("../../spec/dummy/config/environment", __FILE__)
+
+ENGINE_RAILS_ROOT=File.join(File.dirname(__FILE__), '../')
+Dir[File.join(ENGINE_RAILS_ROOT, "spec/factories/**/*.rb")].each {|f| require f }
+
 # Prevent database truncation if the environment is production
 abort("The Rails environment is running in production mode!") if Rails.env.production?
 require 'spec_helper'
