@@ -11,7 +11,7 @@ module DevelopmentNotification
 
     def self.send_email(title: nil, to: nil, from: nil, fromname: nil, subject: nil, template: nil, template_path: nil, locals: nil)
 
-      mailer = Leadersend::Mail.new(title: title, to: to, from: from, fromname: fromname, subject: subject, template: template)
+      mailer = Leadersend::Mail.new({title: title, to: to, from: from, fromname: fromname, subject: subject, template: template}, :without_protection => true)
       leadersend_response_hash = mailer.send
 
       mail_object = DevelopmentNotification::Email.create_from_leadersend_response_hash(leadersend_response_hash)
@@ -27,9 +27,9 @@ module DevelopmentNotification
         ActiveSupport::HashWithIndifferentAccess.new(new: 0, sent: 1, error: 2)
       end
 
-      def self.create_from_leadersend_response_hash(**hash)        
+      def self.create_from_leadersend_response_hash(**hash)
         hash[:status] = self.statuses[hash[:status]]
-        sent_mail = self.new(hash.symbolize_keys)
+        sent_mail = self.new(hash.symbolize_keys, :without_protection => true)
         sent_mail.save
         return sent_mail
       end
