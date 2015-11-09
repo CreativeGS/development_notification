@@ -11,7 +11,7 @@ module DevelopmentNotification
 
     def self.send_email(title: nil, to: nil, from: nil, fromname: nil, subject: nil, template: nil, template_path: nil, locals: nil)
 
-      mailer = Leadersend::Mail.new({title: title, to: to, from: from, fromname: fromname, subject: subject, template: template}, :without_protection => true)
+      mailer = Leadersend::Mail.new(title: title, to: to, from: from, fromname: fromname, subject: subject, template: template)
       leadersend_response_hash = mailer.send
 
       mail_object = DevelopmentNotification::Email.create_from_leadersend_response_hash(leadersend_response_hash)
