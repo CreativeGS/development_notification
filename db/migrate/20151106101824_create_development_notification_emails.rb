@@ -9,6 +9,6 @@ class CreateDevelopmentNotificationEmails < ActiveRecord::Migration
       t.integer :status, index: true, null: false, default: 0
 
       t.timestamps
-    end
+    end unless table_exists?(:development_notification_emails)
   end
 end
