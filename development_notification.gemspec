@@ -3,6 +3,7 @@ $:.push File.expand_path("../lib", __FILE__)
 require "development_notification/version"
 
 Gem::Specification.new do |s|
+  s.required_ruby_version = '>= 2'
   s.name        = "development_notification"
   s.version     = DevelopmentNotification::VERSION
   s.authors     = ["Creative"]

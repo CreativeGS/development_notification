@@ -38,4 +38,8 @@ DevelopmentNotification::Email.send_email(title: "Systemside identifier", to: "d
 * Sometimes production does not load the gem. Append `require: false` in gemfile, and add the line `require 'development_notification'` to `/config/application.rb`
 
 ## Development
-You need to configure the dummy app database in `spec/dummy/config/database.yml`
+1. Set up Ruby >= 2 (try `rvm use 2.2.3@dev_noti --create`)  
+2. Install bundler, bundle
+3. Review dummy app database in `spec/dummy/config/database.yml`
+4. `rake db:create db:migrate db:seed RAILS_ENV=test`
+5. `rspec`
