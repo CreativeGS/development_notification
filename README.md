@@ -29,7 +29,7 @@ After setup you gain access to:
 * DevelopmentNotification::Email model that logs email prepared and sent.
 * DevelopmentNotification::Email.send_email(parameter_hash) #=> sends emails
 
-### Email sending
+### Email sending :bear: (the good stuff) :honeybee:
 DevelopmentNotification::Email.send_email(title: "Systemside identifier", to: ["dump@example1.com", "dump@example2.com"], from: "creative@inbox.lv", fromname: "Creative", subject: "test", template: "html body")
 
 `to:` key accepts both array of strings and a single string  
