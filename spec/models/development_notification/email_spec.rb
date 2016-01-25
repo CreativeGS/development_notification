@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-# rspec ./spec/models/development_notification/email_spec.rb
+# rspec spec/models/development_notification/email_spec.rb
 module DevelopmentNotification
   RSpec.describe Email, type: :model do
     let(:email) { FactoryGirl.create :email }
@@ -21,19 +21,29 @@ module DevelopmentNotification
         expect( DevelopmentNotification::Email.send_email(title: "a", to: "dump@example.com", from: "creative@inbox.lv", fromname: "Creative", subject: "test", template: "ab") ).to be_valid
       end
 
-      it "should perform a test with live creditentials if they are present" do
-        if ENV['LIVE_LEADERSEND_USERNAME'] && ENV['LIVE_LEADERSEND_KEY']
-          DevelopmentNotification.configure do |config|
-            config.leadersend_username = ENV['LIVE_LEADERSEND_USERNAME']
-            config.leadersend_api_key = ENV['LIVE_LEADERSEND_KEY']
-            config.validate!
-          end
-          expect( DevelopmentNotification::Email.send_email(title: "a", to: "dump@example.com", from: "creative@inbox.lv", fromname: "Creative", subject: "test", template: "ab").status ).to eq 1
-        else
-          puts "No creditentials in .env, skipping.."
-          expect( 1 ).to eq 1
+      it "should accept to: as an array of strings" do
+        DevelopmentNotification::Email.destroy_all
+        expect( DevelopmentNotification::Email.send_email(title: "a", to: ["dump@example1.com", "dump@example2.com"], from: "creative@inbox.lv", fromname: "Creative", subject: "test", template: "ab") ).to be_valid
+        expect( DevelopmentNotification::Email.all.size ).to eq 2
+      end
+
+      if ENV['LIVE_LEADERSEND_USERNAME'] && ENV['LIVE_LEADERSEND_KEY']
+        it "should perform a test with live creditentials if they are present" do
+
+            DevelopmentNotification.configure do |config|
+              config.leadersend_username = ENV['LIVE_LEADERSEND_USERNAME']
+              config.leadersend_api_key = ENV['LIVE_LEADERSEND_KEY']
+              config.validate!
+            end
+            expect( DevelopmentNotification::Email.send_email(title: "a", to: "dump@example.com", from: "creative@inbox.lv", fromname: "Creative", subject: "test", template: "ab").status ).to eq 1
+
+        end
+      else
+        puts "No creditentials in .env, skipping.."
+        xit "should perform a test with live creditentials if they are present" do
         end
       end
+
     end
 
     describe ".create_from_leadersend_response_hash" do

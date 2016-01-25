@@ -9,12 +9,17 @@ module DevelopmentNotification
     validates :subject, presence: true
     validates :status, presence: true
 
-    def self.send_email(title: nil, to: nil, from: nil, fromname: nil, subject: nil, template: nil, template_path: nil, locals: nil)
+    def self.send_email(title: nil, to: [], from: nil, fromname: nil, subject: nil, template: nil, template_path: nil, locals: nil)
+      mail_object = nil
 
-      mailer = Leadersend::Mail.new(title: title, to: to, from: from, fromname: fromname, subject: subject, template: template)
-      leadersend_response_hash = mailer.send
+      [to].flatten.each do |to_email|
+        mailer = Leadersend::Mail.new(title: title, to: to_email, from: from, fromname: fromname, subject: subject, template: template)
+        leadersend_response_hash = mailer.send
 
-      mail_object = DevelopmentNotification::Email.create_from_leadersend_response_hash(leadersend_response_hash)
+        mail_object = DevelopmentNotification::Email.create_from_leadersend_response_hash(leadersend_response_hash)
+        puts "sent email to '#{to_email}'"
+
+      end
 
       return mail_object
 

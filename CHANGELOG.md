@@ -10,6 +10,11 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Removed
 -
 
+
+## [0.1.3] - 2016-01-25
+### Added
+- #send_email to: key now also accepts arrays
+
 ## [0.1.2] - 2016-01-21
 ### Added
 - Ruby version >=2 requirement
