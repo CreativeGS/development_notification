@@ -3,7 +3,7 @@
 ## Installation
 
 ```
-gem 'development_notification', "0.1.2" # and bundle
+gem 'development_notification', "0.1.3" # and bundle
 ```
 
 Copy and run migration
