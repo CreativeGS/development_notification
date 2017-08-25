@@ -2,6 +2,14 @@
 
 ## Installation
 
+__Rails5__
+
+```
+gem 'development_notification', "2.0.0" # and bundle
+```
+
+__Rails4__
+
 ```
 gem 'development_notification', "0.1.3" # and bundle
 ```

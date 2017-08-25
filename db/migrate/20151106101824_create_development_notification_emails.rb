@@ -1,4 +1,4 @@
-class CreateDevelopmentNotificationEmails < ActiveRecord::Migration
+class CreateDevelopmentNotificationEmails < ActiveRecord::Migration[4.2]
   def change
     create_table :development_notification_emails do |t|
       t.string :title, index: true, null: false

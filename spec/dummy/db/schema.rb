@@ -1,4 +1,3 @@
-# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -16,15 +15,19 @@ ActiveRecord::Schema.define(version: 20151106101824) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "development_notification_emails", force: true do |t|
-    t.string   "title",                  null: false
-    t.string   "to_address",             null: false
-    t.string   "subject",                null: false
-    t.text     "body"
-    t.text     "response"
-    t.integer  "status",     default: 0, null: false
+  create_table "development_notification_emails", id: :serial, force: :cascade do |t|
+    t.string "title", null: false
+    t.string "to_address", null: false
+    t.string "subject", null: false
+    t.text "body"
+    t.text "response"
+    t.integer "status", default: 0, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.index ["status"], name: "index_development_notification_emails_on_status"
+    t.index ["subject"], name: "index_development_notification_emails_on_subject"
+    t.index ["title"], name: "index_development_notification_emails_on_title"
+    t.index ["to_address"], name: "index_development_notification_emails_on_to_address"
   end
 
 end

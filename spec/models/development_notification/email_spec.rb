@@ -1,5 +1,3 @@
-require 'rails_helper'
-
 # rspec spec/models/development_notification/email_spec.rb
 module DevelopmentNotification
   RSpec.describe Email, type: :model do
@@ -12,16 +10,16 @@ module DevelopmentNotification
     end
 
     describe ".send_email", manual: true do
-      it "should accept explicit hash arguments and return a mail object" do
+      it "accepts explicit hash arguments and returns a mail object" do
         hash = {title: "a", to: "dump@example.com", from: "creative@inbox.lv", fromname: "Creative", subject: "test", template: "ab" }
         expect(DevelopmentNotification::Email.send_email(hash)).to be_valid
       end
 
-      it "should accept implicit hash arguments and return a mail object" do
+      it "accepts implicit hash arguments and returns a mail object" do
         expect( DevelopmentNotification::Email.send_email(title: "a", to: "dump@example.com", from: "creative@inbox.lv", fromname: "Creative", subject: "test", template: "ab") ).to be_valid
       end
 
-      it "should accept to: as an array of strings" do
+      it "accept to: as an array of strings" do
         DevelopmentNotification::Email.destroy_all
         expect( DevelopmentNotification::Email.send_email(title: "a", to: ["dump@example1.com", "dump@example2.com"], from: "creative@inbox.lv", fromname: "Creative", subject: "test", template: "ab") ).to be_valid
         expect( DevelopmentNotification::Email.all.size ).to eq 2
@@ -47,7 +45,7 @@ module DevelopmentNotification
     end
 
     describe ".create_from_leadersend_response_hash" do
-      it "should create an object from OK parameters" do
+      it "creates an object from OK parameters" do
         hash = { title: "a", to_address: "dump@example.com", subject: "test", body: "body", response: "1", status: "sent" }
         email = DevelopmentNotification::Email.create_from_leadersend_response_hash(hash)
         expect(email).to be_valid

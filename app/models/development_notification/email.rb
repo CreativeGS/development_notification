@@ -1,9 +1,5 @@
 module DevelopmentNotification
-  class Email < ActiveRecord::Base
-    # def self.params
-    #   return %i|title to_address subject body response status|
-    # end
-
+  class Email < ApplicationRecord
     validates :title, presence: true
     validates :to_address, presence: true
     validates :subject, presence: true
@@ -13,7 +9,10 @@ module DevelopmentNotification
       mail_object = nil
 
       [to].flatten.each do |to_email|
-        mailer = Leadersend::Mail.new(title: title, to: to_email, from: from, fromname: fromname, subject: subject, template: template)
+        mailer = Leadersend::Mail.new(
+          title: title, to: to_email, from: from,
+          fromname: fromname, subject: subject, template: template
+        )
         leadersend_response_hash = mailer.send
 
         mail_object = DevelopmentNotification::Email.create_from_leadersend_response_hash(leadersend_response_hash)
@@ -34,7 +33,7 @@ module DevelopmentNotification
 
       def self.create_from_leadersend_response_hash(**hash)
         hash[:status] = self.statuses[hash[:status]]
-        sent_mail = self.new(hash.symbolize_keys, :without_protection => true)
+        sent_mail = new(hash.symbolize_keys)  # .merge(without_protection: true)
         sent_mail.save
         return sent_mail
       end
